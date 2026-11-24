@@ -21,7 +21,7 @@
       </q-card-section>
     </q-card>
 
-    <q-card>
+    <q-card class="q-mb-md">
       <q-card-section>
         <div class="text-h6">Docker Concepts (สรุปสั้น ๆ)</div>
         <q-list bordered separator class="q-mt-sm">
@@ -29,6 +29,31 @@
             <q-item-section>
               <q-item-label>{{ item.title }}</q-item-label>
               <q-item-label caption>{{ item.detail }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card-section>
+    </q-card>
+
+    <!-- Docker Quick Reference (การบ้าน Lab 1.1) -->
+    <q-card>
+      <q-card-section>
+        <div class="text-h6">Docker Quick Reference (สรุปคำสั่งใช้งานบ่อย)</div>
+        <div class="text-caption text-grey-7 q-mb-sm">
+          คำสั่ง Docker และ Docker Compose พร้อมคำอธิบายการใช้งานภาษาไทย
+        </div>
+        <q-list bordered separator class="q-mt-sm">
+          <q-item v-for="(cmd, index) in dockerQuickRef" :key="index">
+            <q-item-section avatar>
+              <q-badge color="secondary" text-color="white">{{ index + 1 }}</q-badge>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label class="text-weight-bold text-primary" style="font-family: monospace;">
+                {{ cmd.command }}
+              </q-item-label>
+              <q-item-label caption class="q-mt-xs">
+                <strong>ใช้เมื่อ:</strong> {{ cmd.usage }}
+              </q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
@@ -77,6 +102,34 @@ const dockerItems = [
   {
     title: 'Network',
     detail: 'ให้บริการใน Docker ติดต่อกันได้ เช่น Nginx ส่งต่อคำขอไปยัง Express',
+  },
+]
+
+// การบ้าน Lab 1.1: เพิ่มการ์ด Docker Quick Reference อย่างน้อย 4 คำสั่ง พร้อมคำอธิบายภาษาไทย
+const dockerQuickRef = [
+  {
+    command: 'docker build -t <image-name> -f <Dockerfile> <context>',
+    usage: 'ใช้เมื่อต้องการสร้าง Docker Image จาก Dockerfile เพื่อเตรียมนำไปรันเป็น container เช่น การสร้าง Quasar SPA image',
+  },
+  {
+    command: 'docker run -d -p <host-port>:<container-port> --name <name> <image>',
+    usage: 'ใช้เมื่อต้องการสร้างและรัน container ในเบื้องหลัง (Background/Detached mode) พร้อม map port ระหว่างเครื่องโฮสต์กับ container',
+  },
+  {
+    command: 'docker stop <container> && docker rm <container>',
+    usage: 'ใช้เมื่อต้องการหยุดการทำงานของ container และลบออกจากระบบเพื่อคืนพอร์ตและทรัพยากร ก่อนสร้างหรือรันใหม่',
+  },
+  {
+    command: 'docker compose up -d --build',
+    usage: 'ใช้เมื่อต้องการสั่ง build images ใหม่และเริ่มต้นรันทุก services ที่ระบุใน docker-compose.yml พร้อมกันในโหมดเบื้องหลัง',
+  },
+  {
+    command: 'docker compose ps',
+    usage: 'ใช้เมื่อต้องการตรวจสอบสถานะการทำงาน พอร์ต และความพร้อมของ services ทั้งหมดที่จัดการผ่าน Docker Compose',
+  },
+  {
+    command: 'docker compose down',
+    usage: 'ใช้เมื่อต้องการหยุดและลบ containers, networks และทรัพยากรทั้งหมดที่สร้างขึ้นโดย Compose เมื่อเสร็จสิ้นการทำงาน',
   },
 ]
 </script>
